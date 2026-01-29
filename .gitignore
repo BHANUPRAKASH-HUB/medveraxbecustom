@@ -4,5 +4,4 @@ __pycache__/
 .ipynb_checkpoints/
 data/
 logs/
-model_artifacts/
 *.docx

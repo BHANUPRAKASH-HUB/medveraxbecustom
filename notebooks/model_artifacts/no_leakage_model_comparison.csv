@@ -1,0 +1,5 @@
+model,accuracy,precision,recall,f1_score,roc_auc
+logistic_regression,1.0,1.0,1.0,1.0,1.0
+linear_svm,1.0,1.0,1.0,1.0,1.0
+random_forest,1.0,1.0,1.0,1.0,1.0
+naive_bayes,1.0,1.0,1.0,1.0,1.0

@@ -1,0 +1,20 @@
+{
+    "model": "Multinomial Naive Bayes",
+    "evaluation_type": "synthetic_unseen_data",
+    "sample_size": 100,
+    "metrics": {
+        "Accuracy": 0.87,
+        "Precision": 0.8246,
+        "Recall": 0.94,
+        "F1 Score": 0.8785,
+        "ROC-AUC": 0.952,
+        "Brier Score": 0.0942
+    },
+    "confusion_matrix": {
+        "TN": 40,
+        "FP": 10,
+        "FN": 3,
+        "TP": 47
+    },
+    "evaluated_on": "2026-01-29T15:24:28.056498+00:00"
+}

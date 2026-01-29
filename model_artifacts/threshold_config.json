@@ -1,0 +1,6 @@
+{
+    "best_threshold": 0.2,
+    "optimized_for": "F1 Score",
+    "model": "Logistic Regression",
+    "note": "Threshold tuning applies only to probabilistic models"
+}

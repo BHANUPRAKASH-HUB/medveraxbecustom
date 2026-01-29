@@ -1,0 +1,20 @@
+{
+    "model": "Calibrated Linear SVM",
+    "evaluation_type": "synthetic_unseen_data",
+    "sample_size": 100,
+    "metrics": {
+        "Accuracy": 0.77,
+        "Precision": 0.7547,
+        "Recall": 0.8,
+        "F1 Score": 0.7767,
+        "ROC-AUC": 0.812,
+        "Brier Score": 0.1931
+    },
+    "confusion_matrix": {
+        "TN": 37,
+        "FP": 13,
+        "FN": 10,
+        "TP": 40
+    },
+    "evaluated_on": "2026-01-29T15:24:24.283159+00:00"
+}

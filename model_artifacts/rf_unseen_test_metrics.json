@@ -1,0 +1,20 @@
+{
+    "model": "Random Forest",
+    "evaluation_type": "synthetic_unseen_data",
+    "sample_size": 100,
+    "metrics": {
+        "Accuracy": 0.64,
+        "Precision": 0.6346,
+        "Recall": 0.66,
+        "F1 Score": 0.6471,
+        "ROC-AUC": 0.7808,
+        "Brier Score": 0.2038
+    },
+    "confusion_matrix": {
+        "TN": 31,
+        "FP": 19,
+        "FN": 17,
+        "TP": 33
+    },
+    "evaluated_on": "2026-01-29T15:24:32.794041+00:00"
+}

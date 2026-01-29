@@ -1,0 +1,47 @@
+{
+    "evaluation_type": "combined_unseen_data",
+    "sample_size": 100,
+    "metrics": {
+        "Logistic Regression": {
+            "Accuracy": 0.77,
+            "Precision": 0.7547169811320755,
+            "Recall": 0.8,
+            "F1 Score": 0.7766990291262136,
+            "ROC-AUC": 0.8119999999999998,
+            "Brier Score": 0.1791212907535664,
+            "False Positives": 13.0,
+            "False Negatives": 10.0
+        },
+        "Naive Bayes": {
+            "Accuracy": 0.87,
+            "Precision": 0.8245614035087719,
+            "Recall": 0.94,
+            "F1 Score": 0.8785046728971962,
+            "ROC-AUC": 0.9520000000000001,
+            "Brier Score": 0.09418558176591824,
+            "False Positives": 10.0,
+            "False Negatives": 3.0
+        },
+        "Linear SVM (Calibrated)": {
+            "Accuracy": 0.72,
+            "Precision": 0.7291666666666666,
+            "Recall": 0.7,
+            "F1 Score": 0.7142857142857143,
+            "ROC-AUC": 0.8124,
+            "Brier Score": 0.2728839700914088,
+            "False Positives": 13.0,
+            "False Negatives": 15.0
+        },
+        "Random Forest": {
+            "Accuracy": 0.64,
+            "Precision": 0.6346153846153846,
+            "Recall": 0.66,
+            "F1 Score": 0.6470588235294118,
+            "ROC-AUC": 0.7807999999999999,
+            "Brier Score": 0.20376515629350453,
+            "False Positives": 19.0,
+            "False Negatives": 17.0
+        }
+    },
+    "evaluated_on": "2026-01-29T15:24:52.501610+00:00"
+}

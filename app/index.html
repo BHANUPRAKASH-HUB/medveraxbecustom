@@ -1,0 +1,395 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MedVerax – AI Health Misinformation Detector</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 22px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 20px;
+      border-radius: 8px;
+      background: #eef2f5;
+    }
+
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .reliable { color: green; }
+    .low { color: #cfa000; }
+    .moderate { color: orange; }
+    .high { color: red; }
+
+    .section {
+      margin-top: 15px;
+    }
+
+    .chips span {
+      display: inline-block;
+      padding: 6px 10px;
+      margin: 4px;
+      border-radius: 6px;
+      font-size: 12px;
+      background: #ddd;
+    }
+
+    .danger { background: #ffcccc !important; }
+    .info { background: #cce5ff !important; }
+
+    .explain-box {
+      background: #ffffff;
+      padding: 12px;
+      border-left: 4px solid #0077cc;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>MedVerax – AI Health Misinformation Detector</h2>
+  <p>
+    This system analyzes health-related statements using a machine learning model
+    trained on labeled medical misinformation data.
+  </p>
+
+  <label><b>Enter any health-related statement:</b></label>
+  <textarea id="textInput"></textarea>
+
+  <br>
+  <button type="button" onclick="analyze()">Analyze</button>
+
+  <div id="output" class="result" style="display:none;"></div>
+</div>
+
+<script>
+console.log("MedVerax UI Loaded - " + new Date().toLocaleTimeString());
+async function analyze() {
+  const text = document.getElementById("textInput").value;
+  const output = document.getElementById("output");
+
+  if (!text.trim()) {
+    alert("Please enter some text.");
+    return;
+  }
+
+  output.style.display = "block";
+  output.innerHTML = "Analyzing using TF-IDF + Machine Learning model...";
+
+  const response = await fetch("http://127.0.0.1:8000/analyze", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: text })
+  });
+
+  const data = await response.json();
+  const a = data.analysis;
+
+  let css = "reliable";
+  if (a.classification === "Low Risk") css = "low";
+  if (a.classification === "Moderate Risk") css = "moderate";
+  if (a.classification === "High Risk") css = "high";
+
+  let words = "";
+  a.highlighted_phrases.forEach(p => {
+    words += `<span class="${p.type}">${p.text}</span>`;
+  });
+
+  let riskExplain = "";
+  if (a.classification === "Reliable")
+    riskExplain = "The content aligns with evidence-based medical language and shows no misinformation signals.";
+  else if (a.classification === "Low Risk")
+    riskExplain = "The content contains mild or unclear claims that require verification.";
+  else if (a.classification === "Moderate Risk")
+    riskExplain = "The content shows patterns often seen in misleading health claims.";
+  else
+    riskExplain = "The content strongly resembles known health misinformation patterns.";
+
+  output.innerHTML = `
+    <div class="status ${css}">
+      Classification: ${a.classification}
+    </div>
+
+    <div class="section">
+      <b>Risk Score:</b> ${a.risk_score} / 100
+      <div class="explain-box">
+        Risk score indicates the probability of misinformation. Higher values mean higher risk.
+      </div>
+    </div>
+
+    <div class="section">
+      <b>Confidence:</b> ${a.confidence_score}%
+      <div class="explain-box">
+        Confidence represents how certain the model is about this prediction.
+      </div>
+    </div>
+
+    <div class="section">
+      <b>Model Interpretation:</b>
+      <div class="explain-box">
+        ${riskExplain}
+      </div>
+    </div>
+
+    <div class="section">
+      <b>Why did the model decide this?</b>
+      <div class="explain-box">
+        ${a.explanation}
+      </div>
+    </div>
+
+    <div class="section">
+      <b>Important Words Influencing Prediction:</b>
+      <div class="chips">${words}</div>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>MedVerax – AI Health Misinformation Detector</title>
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 14px rgba(0, 0, 0, 0.1);
+    }
+
+    textarea {
+      width: 100%;
+      height: 130px;
+      padding: 12px;
+      font-size: 14px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 22px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 22px;
+      border-radius: 8px;
+      background: #eef2f5;
+    }
+
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .reliable {
+      color: green;
+    }
+
+    .low {
+      color: #cfa000;
+    }
+
+    .moderate {
+      color: orange;
+    }
+
+    .high {
+      color: red;
+    }
+
+    .section {
+      margin-top: 16px;
+    }
+
+    .explain-box {
+      background: #ffffff;
+      padding: 12px;
+      border-left: 4px solid #0077cc;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .chips span {
+      display: inline-block;
+      padding: 6px 10px;
+      margin: 4px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .danger {
+      background: #ffcccc;
+    }
+
+    .info {
+      background: #cce5ff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>MedVerax – AI Health Misinformation Detector</h2>
+
+    <p>
+      This system analyzes health-related statements using a custom-built
+      <b>TF-IDF + Logistic Regression</b> machine learning model trained on
+      large-scale labeled medical misinformation datasets.
+    </p>
+
+    <label><b>Enter any health-related statement:</b></label>
+    <textarea id="textInput" placeholder="Example: Garlic cures cancer permanently without doctors">
+  </textarea>
+
+    <br>
+    <button type="button" onclick="analyze()">Analyze</button>
+
+    <div id="output" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    console.log("MedVerax UI Loaded - " + new Date().toLocaleTimeString());
+    async function analyze() {
+      const text = document.getElementById("textInput").value;
+      const output = document.getElementById("output");
+
+      if (!text.trim()) {
+        alert("Please enter a health-related statement.");
+        return;
+      }
+
+      // ✅ RESET UI STATE
+      output.style.display = "block";
+      output.innerHTML = "Analyzing using trained AI model...";
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/analyze", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache"
+          },
+          body: JSON.stringify({ text })
+        });
+
+        if (!response.ok) {
+          throw new Error("Backend error");
+        }
+
+        const data = await response.json();
+        const a = data.analysis;
+
+        let css = "reliable";
+        if (a.classification === "Low Risk") css = "low";
+        if (a.classification === "Moderate Risk") css = "moderate";
+        if (a.classification === "High Risk") css = "high";
+
+        let wordsHTML = "";
+        (a.highlighted_phrases || []).forEach(p => {
+          wordsHTML += `<span class="${p.type}">${p.text}</span>`;
+        });
+
+        output.innerHTML = `
+      <div class="status ${css}">
+        Classification: ${a.classification}
+      </div>
+
+      <div class="section">
+        <b>Risk Score:</b> ${a.risk_score} / 100
+        <div class="explain-box">
+          Indicates likelihood of misinformation. Higher score means higher risk.
+        </div>
+      </div>
+
+      <div class="section">
+        <b>Confidence:</b> ${a.confidence_score}%
+        <div class="explain-box">
+          Model certainty based on calibrated probabilities.
+        </div>
+      </div>
+
+      <div class="section">
+        <b>Model Interpretation:</b>
+        <div class="explain-box">
+          ${a.verdict || "Decision derived from statistical patterns and safety rules."}
+        </div>
+      </div>
+
+      <div class="section">
+        <b>Why did the model decide this?</b>
+        <div class="explain-box">
+          ${a.explanation}
+        </div>
+      </div>
+
+      <div class="section">
+        <b>Important Words Influencing Prediction:</b>
+        <div class="chips">
+          ${wordsHTML || "No strong indicators detected."}
+        </div>
+      </div>
+    `;
+      } catch (err) {
+        output.innerHTML =
+          "❌ Failed to connect to backend. Ensure FastAPI is running on port 8000.";
+      }
+    }
+  </script>
+
+</body>
+
+</html>
